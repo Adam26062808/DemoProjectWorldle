@@ -1,37 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset=""UTF-8>
-        <meta name=""viewport" content="width=device-width, initial-scale=1.0">
-        <link ref=""stylesheet" href = "{{url_for(static', filename = 'styles.css')}}">
-        <title>Wordle Game Demo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link ref="stylesheet" href = "{{ url_for('static', filename = 'styles.css') }}">
+        <title>My Portfolio</title>
     </head>
     <body>
-        <h1>Wordle Game</h1>
-        <form method = "POST" id = "world-form">
-            <div class  = "letter-boxes">
-                {% for i in range(word_length) %}
-                    <input> type = "text" name = "letter{{i + 1}}" value="{{guess[i]}}" maxlength = "1" required class = "letter-input">
-                {% endfor %}
-            </div>
-            <button type = "submit">Submit</button>
-        </form>
-        {% if feedback %}
-        <div class = "feedback">
-            {% for result in feedback %}
-                <span class = "{{result}}"> {{result}}</span>
-                {% endfor %}
-        </div>
-        {% endif %}
+        <section class = "header">
+            <img src="{{url_for('static', filename='logoAlgo2022-2023.png')}}" />
+            <!-- This is for your name and an image of you -->
+        </section>
 
-        {% if succes %}
-        <div class = "succes-message">
-            <p>You Make It</p>
-        </div>
-    {% elif error %}
-        <div class = "error-message">
-            <p>{{error}}</p>
-        </div>
-    {% endif %}
+        <section class = "info">
+            <!-- This is for other information about you -->
+            <a  href = "{{url_for('wordle_page')}}" class = "button-link" >Next Page</a>
+        
+        </section>
+
+        <footer>
+            <!-- Your contact information (make it up dont use ur real one) -->
+        </footer>
     </body>
 </html>

@@ -3,7 +3,7 @@ import random
 
 WORDS = ["apple", "grade", "grape", "melon"]
 
-secret_word = random.choice(WORDS).upper()
+secret_word = choice(WORDS).upper()
 
 app = Flask(__name__)
 
