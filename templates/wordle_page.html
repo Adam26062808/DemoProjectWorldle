@@ -3,7 +3,7 @@
     <head>
         <meta charset=""UTF-8>
         <meta name= "viewport" content="width=device-width, initial-scale=1.0">
-        <link ref="stylesheet" href = "{{url_for(static', filename = 'styles.css')}}">
+        <link ref="stylesheet" href = "{{url_for('static', filename = 'styles.css')}}">
         <title>Wordle Game</title>
     </head>
     <body>
@@ -12,7 +12,7 @@
             <input type = "text" name = "name_input" id ="name_input" placeholder="Enter Your Name">
             <div class  = "letter-boxes">
                 {% for i in range(word_length) %}
-                    <input> type = "text" name = "letter{{i + 1}}" value="{{guess[i]}}" maxlength = "1" required class = "letter-input">
+                    <input type = "text" name = "letter{{i + 1}}" value="{{guess[i]}}" maxlength = "1" required class = "letter-input">
                 {% endfor %}
             </div>
             <button type = "submit" id="submit" name="submit">Check</button>
@@ -35,6 +35,26 @@
         <div class = "error-message">
             <p>{{error}}</p>
         </div>
+    {% endif %}
+
+    {% if leaderboard %}
+    <table>
+        <tr>
+            <td><th>placement</th></td><!--placement-->
+            <td><th> Player Name </th></td><!-- name -->
+            <td><th> Word ID </th></td><!-- name -->
+            <td><th> Attempts </th></td><!-- name -->
+        </tr>
+        {% for player in leaderboard %}
+        <tr>
+            <td>{{ leaderboard.index(player) + 1}}</td><!--placement-->
+            <td>{{player [1]}}</td><!-- name -->
+            <td>{{player [3]}}</td><!-- word id-->
+            <td>{{player [2]}}</td><!-- attempts-->
+
+        </tr>
+        {% endfor %}
+    </table>
     {% endif %}
 
 

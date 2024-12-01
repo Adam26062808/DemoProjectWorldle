@@ -110,8 +110,15 @@ def make_datebase():
     make_table()
     add_words()
 
-def add_player(name, attemps, word_id):
+def add_player(name, attempts, word_id):
     open()
-    cursor.execute("INSERT INTO leaderboard (name, attempts, word_id) VALUES (?,?,?)", (name, attemps, word_id))
-    print(f"The player: {name}, takes {attemps} attemps to finish this {word_id} word")
+    cursor.execute("INSERT INTO leaderboard (name, attempts, word_id) VALUES (?,?,?)", (name, attempts, word_id))
+    conn.commit()
+    print(f"The player: {name}, takes {attempts} attemps to finish this {word_id} word")
     close()
+def get_leaderboard(word_id):
+    open()
+    cursor.execute(f"SELECT * FROM leaderboard WHERE word_id = {word_id} ORDER BY attempts ASC")
+    data = cursor.fetchall()
+    close()
+    return data

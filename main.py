@@ -3,6 +3,9 @@ from random import choice
 import database
 import os
 
+leaderboard = []
+attempts = 1
+secret_word = ""
 
 if not os.path.exists("wordle.db"):
     database.make_datebase()
@@ -14,7 +17,7 @@ def choose_word():
     global WORDS
     choosen_word = choice(WORDS) 
     word_id = choosen_word[0]
-    secret_word = choosen_word[1]
+    secret_word = choosen_word[1].upper()
     return word_id, secret_word
 
 
@@ -28,8 +31,8 @@ def index():
 word_id = None
 @app.route("/wordle_page", methods = ["GET", "POST"])
 def wordle_page():
-    global word_id
-    attempts = 0
+    global word_id, secret_word, leaderboard, attempts
+
     if not word_id:
         word_id, secret_word = choose_word()
     guess = [""] * len(secret_word)
@@ -38,23 +41,23 @@ def wordle_page():
         guess = [request.form.get(f"letter{i+1}", "").upper()
                  for i in range(len(secret_word))]
         guess_word = "".join(guess)
-
-        if request.form.get("submit"):
-            attempts +=  1
+        
 
         if len(guess_word) != len(secret_word):
-            return render_template("wordle_page.html", error = "Not Enough Word", word_length = len(secret_word), guess = guess)
+            return render_template("wordle_page.html", error = "Not Enough Word", word_length = len(secret_word), guess = guess, leaderboard = leaderboard)
         feedback = check_guess(guess_word, secret_word)
 
         if guess_word == secret_word:
             database.add_player(name, attempts, word_id)
-            word_id = None
-            return render_template("wordle_page.html", success = True, feedback = feedback, word_length = len(secret_word), guess = guess)
+            leaderboard = database.get_leaderboard(word_id)
+            return render_template("wordle_page.html", success = True, feedback = feedback, word_length = len(secret_word), guess = guess, leaderboard = leaderboard)
         
-        return render_template("wordle_page.html", feedback = feedback, word_length = len(secret_word), guess = guess)
-    return render_template("wordle_page.html",word_length = len(secret_word), guess = guess)
+        return render_template("wordle_page.html", feedback = feedback, word_length = len(secret_word), guess = guess, leaderboard = leaderboard)
+    return render_template("wordle_page.html",word_length = len(secret_word), guess = guess, leaderboard = leaderboard)
 
 def check_guess(guess_word, secret_word):
+    global attempts
+    attempts += 1
     feedback = []
     for i in range(len(guess_word)):
         if guess_word[i] == secret_word[i]:
