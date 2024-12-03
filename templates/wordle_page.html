@@ -9,7 +9,7 @@
     <body>
         <h1>Wordle Game</h1>
         <form method = "POST" id = "world-form">
-            <input type = "text" name = "name_input" id ="name_input" placeholder="Enter Your Name">
+            <input type = "text" name = "name" id ="name_input" value ="{{ name }}" required >
             <div class  = "letter-boxes">
                 {% for i in range(word_length) %}
                     <input type = "text" name = "letter{{i + 1}}" value="{{guess[i]}}" maxlength = "1" required class = "letter-input">
