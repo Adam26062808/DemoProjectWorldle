@@ -69,3 +69,10 @@ button{
 .succes-message {
     color: green;
 }
+
+.leaderboard{
+    border: solid;
+    border-style: double;
+    border-color:burlywood;
+    font-size: 11px;
+}
